@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>TaskY</title>
+    <!-- Font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"
+      rel="stylesheet"/>
+
+    <!--Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- BCSS  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"/>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+  <body onload="loadIntialCardData()">
+
+
+
+
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="Imagr Url" class="form-label">Image Url</label>
+          <input type="url" class="form-control" id="imageurl" aria-describedby="Image Url" placeholder="http://example.com/hello.jpg">
+        </div>
+
+        <div class="mb-3">
+          <label for="Task Title" class="form-label">Task Title</label>
+          <input type="text" class="form-control" id="tasktitle" aria-describedby="Task Title" placeholder="eg:API integration">
+        </div>
+
+        <div class="mb-3">
+          <label for="Task Type" class="form-label">Task Type</label>
+          <input type="url" class="form-control" id="tasktype" aria-describedby="Image Url" placeholder="eg:work">
+        </div>
+
+        <div class="mb-3">
+          <label for="Task Description" class="form-label">Task Description</label>
+          <textarea rows="6" class="form-control" id="taskdescription" aria-describedby="Task Description" placeholder="Describe your task in details"></textarea>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="saveChanges()" data-bs-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand shadow-sm fw-bolder text-primary" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+            </ul>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fas fa-plus"></i>Add New</button>
+          </div>
+        </div>
+      </nav>
+
+
+
+    <!---Serch Bar--->
+    <div class="container">
+       <div class="row justify-content-center mt-5">
+           <div class="col-md-6">
+            <div class="input-group mb-3 shadow">
+                <input type="text" class="form-control" placeholder="Serch task" aria-label="Serch task" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="basic-addon2">
+                  <i class="fas fa-search"></i></span>
+              </div>
+           </div>
+       </div> 
+
+
+
+
+     <!--Card-->  
+       <section>
+        <section class="mx-2 my-4" >
+            <div class="row task_container">
+              <div class="col-md-6 col-lg-3">
+                <div class="card ">
+                  <div class="card-header d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-success "><i class="fas fa-pencil-alt"></i></button>
+                    <button type="button" class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                  </div>
+                  <img src="https://c.ndtvimg.com/2020-12/uirtqpbo_covaxin-covaxin-clinical-trial-covaxin-trials_625x300_22_December_20.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Oxford University's Covaxin </h5>
+                    <p class="card-text">1.1 crore doses of Covaxin from the Serum Institute of India and 55 lakh doses of Covaxin from Bharat Biotech -- will be received by January 14.</p>
+                    <h5> <span class="badge bg-primary">Book</span></h5>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="button" class="btn btn-outline-primary float-end">Open task</button>
+                  </div>
+                </div>
+              </div>
+              <!--2-->
+              <div class="col-md-6 col-lg-3">
+                <div class="card ">
+                  <div class="card-header d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-success "><i class="fas fa-pencil-alt"></i></button>
+                    <button type="button" class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                  </div>
+                  <img src="https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/12/covishield-1606881926.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Covishield vaccine</h5>
+                    <p class="card-text">Over 13.4 crore doses of Covishield vaccine have been administered as on 27 April in India.The ministry is continuously monitoring the safety of all COVID-19 vaccines and is promoting reporting of suspected adverse events.</p>
+                    <h5> <span class="badge bg-primary">Book</span></h5>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="button" class="btn btn-outline-primary float-end">Open task</button>
+                  </div>
+                </div>
+              </div>
+              <!--3-->
+              <div class="col-md-6 col-lg-3">
+                <div class="card ">
+                  <div class="card-header d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-success "><i class="fas fa-pencil-alt"></i></button>
+                    <button type="button" class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                  </div>
+                  <img src="https://quincy-network.s3.ca-central-1.amazonaws.com/wp-content/uploads/sites/9/2020/12/coronavirus-pfizer-vaccine-authorized.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"> Pfizer–BioNTech</h5>
+                    <p class="card-text">The Pfizer–BioNTech COVID-19 vaccine, sold under the brand name Comirnaty, is an mRNA-based COVID-19 vaccine. It is authorized for use in people aged 12 years and older in some jurisdictions and for people 16 years and older in other jurisdictions, to provide protection against infection by the SARS-CoV-2 virus, which causes COVID-19.</p>
+                    <h5> <span class="badge bg-primary">Book</span></h5>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="button" class="btn btn-outline-primary float-end">Open task</button>
+                  </div>
+                </div>
+              </div>
+              <!--4-->
+              <div class="col-md-6 col-lg-3">
+                <div class="card ">
+                  <div class="card-header d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-success "><i class="fas fa-pencil-alt"></i></button>
+                    <button type="button" class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                  </div>
+                  <img src="https://blacknewschannel.com/wp-content/uploads/2021/01/AP21004586676652-822x545.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"> Moderna</h5>
+                    <p class="card-text">The Moderna COVID‑19 vaccine, codenamed mRNA-1273, is a COVID-19 vaccine developed by Moderna, the United States National Institute of Allergy and Infectious Diseases and the Biomedical Advanced Research and Development Authority</p>
+                    <h5> <span class="badge bg-primary">Book</span></h5>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="button" class="btn btn-outline-primary float-end">Open task</button>
+                  </div>
+                </div>
+              </div>
+              <!--5-->
+              <div class="col-md-6 col-lg-3">
+                <div class="card ">
+                  <div class="card-header d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-success "><i class="fas fa-pencil-alt"></i></button>
+                    <button type="button" class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                  </div>
+                  <img src="https://newscenter.lk/wp-content/uploads/2021/03/Sputnik.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"> Sputnik V</h5>
+                    <p class="card-text">Sputnik V COVID-19 vaccine The Sputnik vaccine, named after the Soviet-era satellite that triggered the space race in a nod to the project’s geopolitical importance for Moscow, is administered in two shots, each of which will cost less than $10, according to the official Sputnik V Twitter account.
+                    </p>
+                    <h5> <span class="badge bg-primary">Book</span></h5>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="button" class="btn btn-outline-primary float-end">Open task</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </section>
+
+       </section>
+      </div>
+      <!----->
+      
+    <!-- JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <!--Our JavaScript File-->
+    <script src="index.js"></script>
+  </body>
+</html>
